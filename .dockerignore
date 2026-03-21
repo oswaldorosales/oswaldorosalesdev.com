@@ -39,3 +39,7 @@ README.md
 .prettierrc
 .eslintrc
 *.md
+
+# Docker
+Dockerfile
+.dockerignore

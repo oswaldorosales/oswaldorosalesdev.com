@@ -5,45 +5,19 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
 
-  // Use SWC minifier instead of Terser (50% less RAM)
-  swcMinify: true,
-
   experimental: {
-    // Optimize package imports to reduce bundle size
+    // Optimize heavy imports to reduce the final bundle size
     optimizePackageImports: ["lucide-react"],
-
-    // CRITICAL: Disable parallel webpack workers to save memory
-    webpackBuildWorker: false,
   },
 
-  // Output standalone for Docker
+  // CRITICAL FOR THE VPS: 
+  // Generates the ultra-lightweight version of the app, isolating only what is necessary.
   output: "standalone",
 
-  // Webpack optimization for limited memory
-  webpack: (config, { isServer }) => {
-    // Limit parallelization to reduce memory spikes
-    config.parallelism = 1;
-
-    // Disable cache in Docker builds (saves RAM, cache not reusable)
-    config.cache = false;
-
-    // Optimize memory usage in production builds
-    if (!isServer) {
-      config.optimization = {
-        ...config.optimization,
-        minimize: true,
-        splitChunks: {
-          chunks: "all",
-          cacheGroups: {
-            default: false,
-            vendors: false,
-          },
-        },
-      };
-    }
-
-    return config;
-  },
+  // 💡 Webpack Note: 
+  // We removed `webpackBuildWorker: false` and the `parallelism` limits.
+  // Now that GitHub Actions compiles the code, Next.js can use all 
+  // the available memory and CPU in the cloud to finish the build extremely fast.
 };
 
 export default nextConfig;
