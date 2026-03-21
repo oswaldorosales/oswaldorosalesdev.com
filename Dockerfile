@@ -14,11 +14,20 @@ RUN npm ci
 # ===================================
 FROM node:20-alpine AS builder
 WORKDIR /app
+
+RUN apk add --no-cache libc6-compat
+
+# Copy installed dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/package*.json ./
+
+# Copy source code
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
-# Next.js usará todos los recursos disponibles en la nube para compilar rápido
+ENV NODE_ENV=production
+
+# Next.js will use all available resources in GitHub Actions
 RUN npm run build
 
 # ===================================
