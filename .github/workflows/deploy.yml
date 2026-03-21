@@ -1,7 +1,14 @@
-name: Deploy to GHCR
+name: Build & Push Docker Image (GHCR)
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      no-cache:
+        description: 'Skip cache (full rebuild)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build-and-push:
@@ -33,3 +40,4 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/oswaldorosalesdev:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          no-cache: ${{ github.event.inputs.no-cache == 'true' }}
