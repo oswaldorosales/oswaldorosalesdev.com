@@ -1,22 +1,49 @@
-# Multi-stage Dockerfile for Next.js production builds
-# Optimized for minimal image size and security
+# Multi-stage Dockerfile optimized for VPS with limited resources (2GB RAM)
+# Designed for Next.js standalone builds on Hetzner VPS via Coolify
 
-# 1. Build Stage
+# 1. Build Stage (Optimized for low memory consumption)
 FROM node:20-alpine AS builder
 WORKDIR /app
+
+# Install system dependencies required for Alpine (sharp, native modules)
+RUN apk add --no-cache libc6-compat
+
+# Environment variables to limit memory usage during build
+ENV NODE_OPTIONS="--max-old-space-size=1536"
+ENV NPM_CONFIG_MAXSOCKETS=3
+ENV NPM_CONFIG_FETCH_RETRIES=5
+ENV NPM_CONFIG_FETCH_RETRY_MINTIMEOUT=20000
+ENV NPM_CONFIG_FETCH_RETRY_MAXTIMEOUT=120000
+
+# Copy dependency files
 COPY package*.json ./
 
-# Install all dependencies (needed for build)
-RUN npm ci
+# Install dependencies with memory optimization flags
+# --prefer-offline: reduce concurrent downloads
+# --no-audit: skip security audit (saves 100-200MB RAM)
+# --progress=false: reduce logging overhead
+RUN npm ci \
+    --prefer-offline \
+    --no-audit \
+    --progress=false \
+    && npm cache clean --force
 
+# Copy source code
 COPY . .
+
+# Build with memory limitation
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
-# 2. Production Stage
+# 2. Production Stage (Minimal runtime)
 FROM node:20-alpine AS runner
 WORKDIR /app
+
 ENV NODE_ENV=production
+ENV NODE_OPTIONS="--max-old-space-size=512"
+
+# Install libc6-compat for compatibility with sharp and native dependencies
+RUN apk add --no-cache libc6-compat
 
 # Create non-root user for security
 RUN addgroup --system --gid 1001 nodejs && \
