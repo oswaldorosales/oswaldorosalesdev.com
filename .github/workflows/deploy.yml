@@ -1,7 +1,9 @@
 name: Build & Push Docker Image (GHCR)
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - fix/*
   workflow_dispatch:
     inputs:
       no-cache:
