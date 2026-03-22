@@ -1,25 +1,24 @@
-# Stage 1: Install dependencies
-FROM node:25-alpine AS deps
+# STAGE 1: Install dependencies
+FROM node:22-slim AS deps
 WORKDIR /app
 
-# Required for sharp and other native modules on Alpine
-RUN apk add --no-cache libc6-compat
+# Debian setup for native modules
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 make g++ libc6-dev && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copy all possible lockfiles
 COPY package.json yarn.lock* pnpm-lock.yaml* package-lock.json* ./
 
-# Smart Detection Logic:
-# It will prioritize Yarn or PNPM if their lockfiles exist, 
-# otherwise it defaults to npm ci for a clean installation.
+# Smart Detection - Stable version
 RUN \
   if [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm install --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  else npm install; \
+  elif [ -f package-lock.json ]; then npm ci --no-audit --no-fund; \
+  else npm install --no-audit --no-fund; \
   fi
 
-# Stage 2: Build the app
-FROM node:25-alpine AS builder
+# STAGE 2: Build the app
+FROM node:22-slim AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -33,19 +32,23 @@ RUN \
   else npm run build; \
   fi
 
-# Stage 3: Production Runner
-FROM node:25-alpine AS runner
+# STAGE 3: Production Runner
+FROM node:22-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
-# Memory safety for your 2GB VPS
+# Protegiendo los 2GB de RAM de tu VPS
 ENV NODE_OPTIONS="--max-old-space-size=384"
 
-# Security: Non-root user
-RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 nextjs
+# Instalamos dumb-init para Debian
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    dumb-init && \
+    rm -rf /var/lib/apt/lists/*
 
-# Standalone mode artifacts
+# Seguridad: Usuario sin privilegios
+RUN groupadd --system --gid 1001 nodejs && \
+    useradd --system --uid 1001 nextjs
+
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
