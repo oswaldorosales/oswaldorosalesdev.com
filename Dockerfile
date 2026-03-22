@@ -9,6 +9,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY package.json yarn.lock* pnpm-lock.yaml* package-lock.json* ./
 
+# Justo antes del npm ci o npm install
+RUN npm config set fetch-retries 5 && \
+    npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000
+
 # Smart Detection - Stable version
 RUN \
   if [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
