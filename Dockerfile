@@ -1,48 +1,51 @@
-# Multi-stage Dockerfile: Maximum Stability Edition
-# Base: Debian Slim + npm Concurrency Limits
-
-# Stage 1: Dependencies
-FROM node:22-slim AS deps
+# Stage 1: Install dependencies
+FROM node:25-alpine AS deps
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3 make g++ libc6-dev && \
-    rm -rf /var/lib/apt/lists/*
+# Required for sharp and other native modules on Alpine
+RUN apk add --no-cache libc6-compat
 
-COPY package*.json ./
+# Copy all possible lockfiles
+COPY package.json yarn.lock* pnpm-lock.yaml* package-lock.json* ./
 
-# Anti-deadlock configuration for npm
-RUN npm config set maxsockets 3 && \
-    npm config set progress false && \
-    npm install --frozen-lockfile --no-audit --no-fund
+# Smart Detection Logic:
+# It will prioritize Yarn or PNPM if their lockfiles exist, 
+# otherwise it defaults to npm ci for a clean installation.
+RUN \
+  if [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm install --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  else npm install; \
+  fi
 
-# Stage 2: Builder
-FROM node:22-slim AS builder
+# Stage 2: Build the app
+FROM node:25-alpine AS builder
 WORKDIR /app
-
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/package*.json ./
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-RUN npm run build
+RUN \
+  if [ -f yarn.lock ]; then yarn build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm build; \
+  else npm run build; \
+  fi
 
-# Stage 3: Runner
-FROM node:22-slim AS runner
+# Stage 3: Production Runner
+FROM node:25-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+# Memory safety for your 2GB VPS
 ENV NODE_OPTIONS="--max-old-space-size=384"
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    dumb-init && \
-    rm -rf /var/lib/apt/lists/*
+# Security: Non-root user
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
 
-RUN groupadd --system --gid 1001 nodejs && \
-    useradd --system --uid 1001 nextjs
-
+# Standalone mode artifacts
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
@@ -52,8 +55,4 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
-
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["node", "server.js"]
