@@ -3,35 +3,44 @@ FROM node:20-slim AS deps
 
 WORKDIR /app
 
-# Dependencias para módulos nativos
+# Dependencias necesarias para módulos nativos
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 make g++ libc6-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Actualizar npm (soluciona bug "Exit handler never called")
-RUN npm install -g npm@11
+# Activar pnpm
+RUN corepack enable
+RUN corepack prepare pnpm@9 --activate
 
 COPY package.json package-lock.json ./
 
-RUN npm ci --no-audit --no-fund
+# Convertir lockfile npm -> pnpm automáticamente
+RUN pnpm import
 
-# Verificar que los binarios se instalaron correctamente
+# Instalar dependencias
+RUN pnpm install --frozen-lockfile
+
+# Verificar binarios instalados
 RUN ls -la node_modules/.bin
 
-# STAGE 2: Build the app
+# STAGE 2: Build
 FROM node:20-slim AS builder
 
 WORKDIR /app
 
+RUN corepack enable
+RUN corepack prepare pnpm@9 --activate
+
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-RUN npm run build
+RUN pnpm build
 
-# STAGE 3: Production runner
+# STAGE 3: Runner
 FROM node:20-slim AS runner
 
 WORKDIR /app
@@ -42,12 +51,10 @@ ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 ENV NODE_OPTIONS="--max-old-space-size=384"
 
-# Instalar dumb-init
 RUN apt-get update && apt-get install -y --no-install-recommends \
     dumb-init \
     && rm -rf /var/lib/apt/lists/*
 
-# Usuario sin privilegios
 RUN groupadd --system --gid 1001 nodejs \
     && useradd --system --uid 1001 nextjs
 
