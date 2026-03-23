@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  web:
+    container_name: oswaldorosalesdev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+
+    ports:
+      - "3000:3000"
+
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+    environment:
+      NODE_ENV: development
+      NEXT_TELEMETRY_DISABLED: 1
+
+    command: pnpm dev
