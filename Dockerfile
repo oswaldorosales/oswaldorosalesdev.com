@@ -49,7 +49,6 @@ ENV NODE_ENV=production
 # Build the application
 RUN pnpm build
 
-
 # ---------------------------------------------------------
 # STAGE 3 — Production runtime
 # ---------------------------------------------------------
@@ -65,9 +64,10 @@ ENV HOSTNAME=0.0.0.0
 # Limit memory usage for small VPS environments
 ENV NODE_OPTIONS="--max-old-space-size=384"
 
-# Install minimal runtime dependency
+# Install minimal runtime dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     dumb-init \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user for security
@@ -84,5 +84,9 @@ USER nextjs
 
 EXPOSE 3000
 
+# Health check for Coolify / Docker
+HEALTHCHECK --interval=10s --timeout=5s --start-period=10s --retries=3 \
+  CMD curl -fsS http://localhost:3000/api/health || exit 1
+
 # Start Next.js standalone server
-CMD ["node", "server.js"]
+CMD ["dumb-init", "node", "server.js"]
