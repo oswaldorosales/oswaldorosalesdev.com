@@ -10,6 +10,7 @@ export interface Experience {
   achievements: string[];
   technologies: string[];
   impact?: string;
+  learnings?: string[];
 }
 
 export interface Project {

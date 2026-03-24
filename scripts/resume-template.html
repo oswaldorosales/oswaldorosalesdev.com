@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{NAME}} - Resume</title>
+  <style>
+    /* ============================================================================
+       RESET & BASE STYLES
+       ============================================================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 210mm;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+      font-size: 9pt;
+      line-height: 1.4;
+      color: #1e293b;
+      background: white;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ============================================================================
+       LAYOUT STRUCTURE - SIMPLE GRID
+       ============================================================================ */
+    .resume-container {
+      display: grid;
+      grid-template-columns: 32% 68%;
+      width: 210mm;
+      gap: 0;
+    }
+
+    /* Sidebar - 32% width */
+    .sidebar {
+      background: #f8fafc;
+      padding: 25px 18px;
+      border-right: 1px solid #e2e8f0;
+    }
+
+    /* Main content - 68% width */
+    .main-content {
+      padding: 25px 30px;
+    }
+
+    /* ============================================================================
+       SIDEBAR COMPONENTS
+       ============================================================================ */
+    .profile-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 15px;
+      display: block;
+      border: 3px solid white;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-section {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 10pt;
+      font-weight: 700;
+      color: #2563eb;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #2563eb;
+    }
+
+    .contact-item {
+      margin-bottom: 8px;
+      font-size: 8pt;
+      color: #475569;
+      word-wrap: break-word;
+      line-height: 1.4;
+    }
+
+    .contact-item strong {
+      color: #1e293b;
+      display: block;
+      font-size: 7.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 2px;
+    }
+
+    .contact-item a {
+      color: #2563eb;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    /* Skills section */
+    .skills-category {
+      margin-bottom: 12px;
+    }
+
+    .skills-category-name {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+
+    .skills-list {
+      font-size: 7.5pt;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    /* ============================================================================
+       MAIN CONTENT COMPONENTS
+       ============================================================================ */
+    .header {
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .name {
+      font-size: 24pt;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .job-title {
+      font-size: 13pt;
+      font-weight: 600;
+      color: #2563eb;
+      margin-bottom: 6px;
+    }
+
+    .headline {
+      font-size: 9pt;
+      color: #475569;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    /* Summary section */
+    .summary-section {
+      margin-bottom: 14px;
+    }
+
+    .summary-text {
+      font-size: 8.5pt;
+      color: #475569;
+      line-height: 1.5;
+      text-align: justify;
+    }
+
+    /* Experience section */
+    .experience-section {
+      margin-bottom: 14px;
+    }
+
+    .experience-item {
+      margin-bottom: 11px;
+      page-break-inside: avoid;
+    }
+
+    /* Add top padding to item that breaks to page 2 - IBM is 5th item */
+    .experience-item:nth-child(5) {
+      padding-top: 25mm;
+    }
+
+    .experience-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .experience-header {
+      margin-bottom: 5px;
+    }
+
+    .role {
+      font-size: 10.5pt;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 2px;
+      line-height: 1.2;
+    }
+
+    .company-period {
+      font-size: 9pt;
+      color: #2563eb;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .location {
+      font-size: 7.5pt;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    .experience-description {
+      font-size: 8pt;
+      color: #475569;
+      line-height: 1.5;
+      margin-bottom: 4px;
+      text-align: justify;
+    }
+
+    .experience-impact {
+      font-size: 7.5pt;
+      color: #475569;
+      line-height: 1.5;
+      margin-bottom: 4px;
+      font-style: italic;
+    }
+
+    .experience-impact strong {
+      color: #2563eb;
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    .technologies {
+      margin-top: 4px;
+      font-size: 7.5pt;
+    }
+
+    .tech-label {
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .tech-items {
+      color: #64748b;
+    }
+
+    /* Education section */
+    .education-section {
+      margin-bottom: 0;
+    }
+
+    .education-item {
+      margin-bottom: 10px;
+      page-break-inside: avoid;
+    }
+
+    .education-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .education-degree {
+      font-size: 10pt;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 2px;
+    }
+
+    .education-institution {
+      font-size: 9pt;
+      color: #2563eb;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .education-period {
+      font-size: 7.5pt;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    /* ============================================================================
+       PRINT OPTIMIZATION
+       ============================================================================ */
+    @media print {
+      body {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="resume-container">
+    <!-- ========================================================================
+         SIDEBAR
+         ======================================================================== -->
+    <aside class="sidebar">
+      <!-- Profile Photo -->
+      {{PROFILE_PHOTO}}
+
+      <!-- Contact Information -->
+      <div class="contact-section">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-item">
+          <strong>Email</strong>
+          <a href="mailto:{{EMAIL}}">{{EMAIL}}</a>
+        </div>
+        <div class="contact-item">
+          <strong>Location</strong>
+          {{LOCATION}}
+        </div>
+        <div class="contact-item">
+          <strong>GitHub</strong>
+          <a href="{{GITHUB_URL}}">{{GITHUB_CLEAN}}</a>
+        </div>
+        <div class="contact-item">
+          <strong>LinkedIn</strong>
+          <a href="{{LINKEDIN_URL}}">{{LINKEDIN_CLEAN}}</a>
+        </div>
+      </div>
+
+      <!-- Technical Skills -->
+      <div class="skills-section">
+        <h2 class="section-title">Skills</h2>
+        {{SKILLS}}
+      </div>
+    </aside>
+
+    <!-- ========================================================================
+         MAIN CONTENT
+         ======================================================================== -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <h1 class="name">{{NAME}}</h1>
+        <div class="job-title">{{TITLE}}</div>
+        <p class="headline">{{HEADLINE}}</p>
+      </header>
+
+      <!-- Professional Summary -->
+      <section class="summary-section">
+        <h2 class="section-title">Professional Summary</h2>
+        <p class="summary-text">{{BIO}}</p>
+      </section>
+
+      <!-- Professional Experience -->
+      <section class="experience-section">
+        <h2 class="section-title">Professional Experience</h2>
+        {{EXPERIENCES}}
+      </section>
+
+      <!-- Education -->
+      <section class="education-section">
+        <h2 class="section-title">Education</h2>
+        {{EDUCATION}}
+      </section>
+    </main>
+  </div>
+</body>
+</html>
