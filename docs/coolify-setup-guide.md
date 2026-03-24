@@ -322,12 +322,16 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME }}:latest
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          build-args: |
+            NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
 
       - name: Deploy to Coolify
         run: |
           curl -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
             "${{ secrets.COOLIFY_WEBHOOK }}"
 ```
+
+**Note:** If you're using Next.js public environment variables (like `NEXT_PUBLIC_*`), you must pass them as build arguments since Next.js requires them at build time, not runtime. Add them to GitHub Secrets and pass them via `build-args` as shown above.
 
 ## Dockerfile Requirements
 
@@ -351,6 +355,10 @@ RUN npm ci --only=production
 
 COPY . .
 
+# Pass build-time environment variables (e.g., for Next.js NEXT_PUBLIC_*)
+ARG NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+ENV NEXT_PUBLIC_RECAPTCHA_SITE_KEY=$NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
@@ -358,6 +366,8 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
 
 CMD ["npm", "start"]
 ```
+
+**Note:** For Next.js applications, `NEXT_PUBLIC_*` environment variables must be available at build time. Declare them as build arguments (`ARG`) and environment variables (`ENV`) before the build step.
 
 ## Deployment
 
