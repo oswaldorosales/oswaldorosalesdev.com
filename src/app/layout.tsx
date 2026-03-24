@@ -9,23 +9,77 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Oswaldo Rosales | Software Engineer",
-  description: "Full-stack software engineer specializing in scalable web applications and cloud infrastructure.",
-  keywords: ["Software Engineer", "Full Stack Developer", "Next.js", "TypeScript", "Cloud Infrastructure"],
-  authors: [{ name: "Oswaldo Rosales" }],
+  metadataBase: new URL("https://oswaldorosalesdev.com"),
+  title: {
+    default: "Oswaldo Rosales | Software Engineer",
+    template: "%s | Oswaldo Rosales",
+  },
+  description:
+    "Software Engineer with 9+ years of experience building scalable, reliable systems. Specialized in Java, Spring Boot, microservices, and event-driven architecture. Currently working at Avenue Code.",
+  keywords: [
+    "Software Engineer",
+    "Backend Developer",
+    "Java Developer",
+    "Spring Boot",
+    "Microservices",
+    "Event-Driven Architecture",
+    "Full Stack Developer",
+    "Guadalajara",
+    "Mexico",
+    "Avenue Code",
+    "EPAM",
+    "IBM",
+    "TypeScript",
+    "React",
+    "Next.js",
+  ],
+  authors: [{ name: "Oswaldo Rosales", url: "https://oswaldorosalesdev.com" }],
+  creator: "Oswaldo Rosales",
+  publisher: "Oswaldo Rosales",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://oswaldorosalesdev.com",
-    siteName: "Oswaldo Rosales",
+    siteName: "Oswaldo Rosales - Software Engineer",
     title: "Oswaldo Rosales | Software Engineer",
-    description: "Full-stack software engineer specializing in scalable web applications and cloud infrastructure.",
+    description:
+      "Software Engineer with 9+ years of experience building scalable systems. Specialized in Java, Spring Boot, microservices, and event-driven architecture.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Oswaldo Rosales - Software Engineer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Oswaldo Rosales | Software Engineer",
-    description: "Full-stack software engineer specializing in scalable web applications and cloud infrastructure.",
+    description:
+      "Software Engineer with 9+ years of experience building scalable systems. Specialized in Java, Spring Boot, and microservices.",
+    creator: "@OswaldoRosalesA",
+    images: ["/og-image.png"],
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "https://oswaldorosalesdev.com",
+  },
+  verification: {
+    // Add when you set up Google Search Console
+    // google: "your-google-verification-code",
+  },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -35,9 +89,49 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="antialiased">
-        {children}
-      </body>
+      <head>
+        {/* Structured Data - JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Oswaldo Rosales",
+              url: "https://oswaldorosalesdev.com",
+              image: "https://oswaldorosalesdev.com/images/profile.avif",
+              jobTitle: "Software Engineer",
+              worksFor: {
+                "@type": "Organization",
+                name: "Avenue Code",
+              },
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Guadalajara",
+                addressRegion: "Jalisco",
+                addressCountry: "Mexico",
+              },
+              sameAs: [
+                "https://github.com/oswaldorosales",
+                "https://www.linkedin.com/in/oswaldo-rosales/",
+                "https://twitter.com/OswaldoRosalesA",
+              ],
+              knowsAbout: [
+                "Software Engineering",
+                "Java",
+                "Spring Boot",
+                "Microservices",
+                "Event-Driven Architecture",
+                "TypeScript",
+                "React",
+                "Next.js",
+                "Cloud Infrastructure",
+              ],
+            }),
+          }}
+        />
+      </head>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

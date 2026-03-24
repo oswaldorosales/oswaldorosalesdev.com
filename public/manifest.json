@@ -1,0 +1,23 @@
+{
+  "name": "Oswaldo Rosales - Software Engineer",
+  "short_name": "OR Portfolio",
+  "description": "Software Engineer with 9+ years of experience building scalable systems",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
