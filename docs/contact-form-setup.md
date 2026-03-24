@@ -111,6 +111,40 @@ Since the contact form uses SMTP authentication, you need to create an **App-Spe
 
 **Important:** Make sure `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` starts with `NEXT_PUBLIC_` prefix - this makes it available to the client-side code.
 
+### Docker Build Configuration (GitHub Actions)
+
+If you're using GitHub Actions with Docker builds, the reCAPTCHA site key must be passed as a build argument since Next.js requires `NEXT_PUBLIC_*` environment variables at build time.
+
+**Add to GitHub Secrets:**
+1. Go to **Settings → Secrets and variables → Actions → Repository secrets**
+2. Add secret: `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` with your site key value
+
+**Update `.github/workflows/deploy.yml`:**
+
+```yaml
+- uses: docker/build-push-action@v5
+  with:
+    context: .
+    push: true
+    tags: |
+      ${{ env.IMAGE_NAME }}:latest
+      ${{ env.IMAGE_NAME }}:${{ github.sha }}
+    build-args: |
+      NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
+```
+
+**Update `Dockerfile`:**
+
+Add these lines before the build step:
+
+```dockerfile
+# Pass reCAPTCHA site key as build argument and environment variable
+ARG NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+ENV NEXT_PUBLIC_RECAPTCHA_SITE_KEY=$NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+```
+
+This ensures the reCAPTCHA site key is embedded into the Next.js build at build time, making it available to client-side components.
+
 ---
 
 ## Step 4: Test the Contact Form
@@ -314,6 +348,10 @@ Before deploying:
   - [ ] `ZOHO_APP_PASSWORD`
   - [ ] `NEXT_PUBLIC_RECAPTCHA_SITE_KEY`
   - [ ] `RECAPTCHA_SECRET_KEY`
+- [ ] Docker build configuration (if using GitHub Actions):
+  - [ ] `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` added to GitHub Secrets
+  - [ ] Build args configured in workflow file
+  - [ ] ARG and ENV declarations added to Dockerfile
 - [ ] Test email sent successfully
 - [ ] reCAPTCHA badge appears (bottom-right corner)
 - [ ] Check reCAPTCHA score in server logs (should be > 0.5)
