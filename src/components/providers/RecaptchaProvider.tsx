@@ -6,8 +6,7 @@ export function RecaptchaProvider({ children }: { children: React.ReactNode }) {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
   if (!siteKey) {
-    console.warn('reCAPTCHA site key not configured. Form will work without CAPTCHA protection.');
-    return <>{children}</>;
+    throw new Error('Missing NEXT_PUBLIC_RECAPTCHA_SITE_KEY');
   }
 
   return (
