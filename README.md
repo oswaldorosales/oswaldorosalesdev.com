@@ -6,6 +6,11 @@ Professional portfolio and project hub built with modern web technologies and op
 
 ---
 
+> **Want to use this for your own portfolio?**
+> Check out the [Fork & Customize Guide](docs/fork-and-customize.md) for step-by-step instructions on how to make this portfolio your own!
+
+---
+
 ## 🛠 Tech Stack
 
 - **Framework:** Next.js 15+ (App Router)
@@ -211,6 +216,7 @@ pnpm generate-resume   # Generate PDF resume from data.ts
 
 ## 📚 Documentation
 
+- **[Fork & Customize Guide](docs/fork-and-customize.md)** - Complete guide to fork this repo and make it your own portfolio
 - **[Coolify Setup Guide](docs/coolify-setup-guide.md)** - Complete guide for VPS deployment with Coolify
 - **[Resume Generator](docs/resume-generator.md)** - Documentation for the automated resume PDF generator
 
