@@ -2,26 +2,55 @@
 
 import { useState } from "react";
 import { Mail, Send, CheckCircle, AlertCircle } from "lucide-react";
+import { sendContactEmail } from "@/app/actions/contact";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export function Contact() {
   const [formState, setFormState] = useState({
     name: "",
     email: "",
     message: "",
+    honeypot: "", // Anti-spam honeypot field
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
+    setErrorMessage("");
 
-    // TODO: Implement Server Action or API route
-    // For now, simulate submission
-    setTimeout(() => {
-      setStatus("success");
-      setFormState({ name: "", email: "", message: "" });
-      setTimeout(() => setStatus("idle"), 3000);
-    }, 1000);
+    try {
+      // Generate reCAPTCHA token
+      let recaptchaToken: string | undefined;
+      if (executeRecaptcha) {
+        recaptchaToken = await executeRecaptcha('contact_form');
+      }
+
+      const result = await sendContactEmail({
+        name: formState.name,
+        email: formState.email,
+        message: formState.message,
+        honeypot: formState.honeypot,
+        recaptchaToken,
+      });
+
+      if (result.success) {
+        setStatus("success");
+        setFormState({ name: "", email: "", message: "", honeypot: "" });
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+        setErrorMessage(result.error || "Something went wrong");
+        setTimeout(() => setStatus("idle"), 5000);
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setStatus("error");
+      setErrorMessage("Failed to send message. Please try again.");
+      setTimeout(() => setStatus("idle"), 5000);
+    }
   };
 
   const handleChange = (
@@ -49,6 +78,17 @@ export function Contact() {
 
           {/* Contact Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Honeypot field - hidden from users, bots will fill it */}
+            <input
+              type="text"
+              name="honeypot"
+              value={formState.honeypot}
+              onChange={handleChange}
+              style={{ display: "none" }}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+
             {/* Name */}
             <div>
               <label
@@ -146,7 +186,7 @@ export function Contact() {
             )}
             {status === "error" && (
               <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-center">
-                Something went wrong. Please try again or email me directly.
+                {errorMessage || "Something went wrong. Please try again or email me directly."}
               </div>
             )}
           </form>
