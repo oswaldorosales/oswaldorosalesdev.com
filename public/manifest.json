@@ -3,7 +3,7 @@
   "short_name": "OR Portfolio",
   "description": "Software Engineer with 9+ years of experience building scalable systems",
   "start_url": "/",
-  "display": "standalone",
+  "display": "browser",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
   "icons": [
