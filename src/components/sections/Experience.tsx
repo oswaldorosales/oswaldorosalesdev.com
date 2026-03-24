@@ -112,23 +112,55 @@ export function Experience() {
 
                       {/* Achievements (Collapsible) */}
                       {expandedIds.has(exp.id) && (
-                        <div className="mb-4 animate-in slide-in-from-top-2 duration-300">
-                          <h4 className="font-semibold text-slate-900 mb-2">
-                            Key Achievements:
-                          </h4>
-                          <ul className="space-y-2">
-                            {exp.achievements.map((achievement, i) => (
-                              <li
-                                key={i}
-                                className="flex items-start gap-2 text-slate-700"
-                              >
-                                <span className="text-blue-600 mt-1.5">•</span>
-                                <span>
-                                  <MarkdownText text={achievement} />
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
+                        <div className="space-y-4 mb-4 animate-in slide-in-from-top-2 duration-300">
+                          <div>
+                            <h4 className="font-semibold text-slate-900 mb-2">
+                              Key Achievements:
+                            </h4>
+                            <ul className="space-y-2">
+                              {exp.achievements.map((achievement, i) => (
+                                <li
+                                  key={i}
+                                  className="flex items-start gap-2 text-slate-700"
+                                >
+                                  <span className="text-blue-600 mt-1.5">•</span>
+                                  <span>
+                                    <MarkdownText text={achievement} />
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* Impact */}
+                          {exp.impact && (
+                            <div>
+                              <h4 className="font-semibold text-slate-900 mb-2">
+                                Impact:
+                              </h4>
+                              <p className="text-slate-700">{exp.impact}</p>
+                            </div>
+                          )}
+
+                          {/* Learnings */}
+                          {exp.learnings && exp.learnings.length > 0 && (
+                            <div>
+                              <h4 className="font-semibold text-slate-900 mb-2">
+                                Key Learnings:
+                              </h4>
+                              <ul className="space-y-2">
+                                {exp.learnings.map((learning, i) => (
+                                  <li
+                                    key={i}
+                                    className="flex items-start gap-2 text-slate-700"
+                                  >
+                                    <span className="text-blue-600 mt-1.5">•</span>
+                                    <span>{learning}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
                         </div>
                       )}
 
