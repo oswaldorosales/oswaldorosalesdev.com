@@ -29,6 +29,31 @@ export function Hero() {
               </h2>
             </div>
 
+            {/* Profile Image - Mobile Only */}
+            <div className="flex justify-center lg:hidden">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl blur-2xl opacity-30 animate-pulse" />
+                <div className="relative w-72 h-72 rounded-2xl overflow-hidden border-4 border-slate-700 shadow-2xl">
+                  <picture>
+                    <source
+                      srcSet="/images/profile.avif"
+                      type="image/avif"
+                    />
+                    <source
+                      srcSet="/images/profile.webp"
+                      type="image/webp"
+                    />
+                    <img
+                      src="/images/profile.webp"
+                      alt={personalInfo.name}
+                      className="w-full h-full object-cover"
+                      loading="eager"
+                    />
+                  </picture>
+                </div>
+              </div>
+            </div>
+
             <p className="text-xl text-slate-400 max-w-2xl">
               {personalInfo.headline}
             </p>
@@ -76,8 +101,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right: Profile Image */}
-          <div className="flex justify-center lg:justify-end">
+          {/* Right: Profile Image - Desktop Only */}
+          <div className="hidden lg:flex justify-center lg:justify-end">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl blur-2xl opacity-30 animate-pulse" />
               <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-2xl overflow-hidden border-4 border-slate-700 shadow-2xl">
