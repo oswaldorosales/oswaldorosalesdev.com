@@ -71,7 +71,7 @@ export function Contact() {
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
               Get In Touch
             </h2>
-            <p className="text-xl text-slate-600">
+            <p className="text-xl text-slate-700">
               Have a project in mind? Let&apos;s talk about how I can help.
             </p>
           </div>
@@ -104,7 +104,7 @@ export function Contact() {
                 value={formState.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200 text-slate-900"
                 placeholder="John Doe"
               />
             </div>
@@ -124,7 +124,7 @@ export function Contact() {
                 value={formState.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200 text-slate-900"
                 placeholder="john@example.com"
               />
             </div>
@@ -144,7 +144,7 @@ export function Contact() {
                 onChange={handleChange}
                 required
                 rows={6}
-                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200 resize-none"
+                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200 resize-none text-slate-900"
                 placeholder="Tell me about your project..."
               />
             </div>
@@ -193,7 +193,7 @@ export function Contact() {
 
           {/* Direct Contact */}
           <div className="mt-12 pt-12 border-t border-slate-200 text-center">
-            <p className="text-slate-600 mb-4">Or reach out directly:</p>
+            <p className="text-slate-700 mb-4">Or reach out directly:</p>
             <a
               href="mailto:contact@oswaldorosalesdev.com"
               className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-lg"
