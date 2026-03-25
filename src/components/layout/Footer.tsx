@@ -1,3 +1,5 @@
+'use client';
+
 import { Github, Linkedin, Twitter, Heart } from "lucide-react";
 import { personalInfo, socialLinks } from "@/lib/constants/data";
 

@@ -108,18 +108,12 @@ The Dockerfile uses a 3-stage build process optimized for production:
 ### Build and Run with Docker
 
 ```bash
-# Build with build args
-docker build \
-  --build-arg NEXT_PUBLIC_RECAPTCHA_SITE_KEY="your-site-key" \
-  -t oswaldorosalesdev .
+# Build the production image
+docker build -t oswaldorosalesdev .
 
-**Using an env file:**
-```bash
-# Create .env.production file
-docker run -p 3000:3000 --env-file .env.production.local oswaldorosalesdev
+# Run the container
+docker run -p 3000:3000 oswaldorosalesdev
 ```
-
-**Note:** `NEXT_PUBLIC_*` variables must be passed as build arguments since Next.js requires them at build time. Other variables can be passed at runtime.
 
 ### Using Docker Compose
 
@@ -235,17 +229,17 @@ pnpm generate-resume   # Generate PDF resume from data.ts
 - [x] Infrastructure-ready setup with Docker
 - [x] Health check endpoint for monitoring
 - [x] Automated CI/CD pipeline (GitHub Actions → GHCR → Coolify)
-- [x] Professional portfolio sections (Hero, Experience, Skills, Projects)
+- [x] Professional portfolio sections (Hero, Experience, Skills, Projects, Contact)
 - [x] Responsive design with Tailwind CSS
 - [x] Auto-generated PDF resume from data.ts
 - [x] Type-safe content management
 - [x] SEO-optimized metadata
+- [x] Direct contact information
 
 ### 🚧 Roadmap
 
 - [ ] Dark mode support
 - [ ] Blog with MDX support
-- [ ] Contact form with Server Actions
 - [ ] Analytics integration (privacy-focused)
 - [ ] Multi-language support (EN/ES)
 - [ ] Performance monitoring dashboard
@@ -272,59 +266,9 @@ pnpm generate-resume   # Generate PDF resume from data.ts
 
 ## 🔐 Environment Variables
 
-### Build-Time Variables (must be passed during Docker build)
+Currently, this project does not require any environment variables for basic functionality.
 
-These variables are required at build time because Next.js embeds `NEXT_PUBLIC_*` variables into the client-side bundle:
-
-```bash
-NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_recaptcha_site_key_here
-```
-
-**Docker build example:**
-```bash
-docker build --build-arg NEXT_PUBLIC_RECAPTCHA_SITE_KEY="6Lf..." -t oswaldorosalesdev .
-```
-
-### Runtime Variables (can be passed when running the container)
-
-These variables are only used on the server-side and can be passed at runtime:
-
-```bash
-# Zoho Email Configuration
-ZOHO_EMAIL=contact@example.com
-ZOHO_APP_PASSWORD=your_zoho_app_password
-
-# reCAPTCHA Secret (server-side only)
-RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
-
-# Application (optional)
-NODE_ENV=production
-PORT=3000
-```
-
-**Docker run example:**
-```bash
-docker run -p 3000:3000 \
-  -e ZOHO_EMAIL="contact@example.com" \
-  -e ZOHO_APP_PASSWORD="your-password" \
-  -e RECAPTCHA_SECRET_KEY="6Lf..." \
-  oswaldorosalesdev
-```
-
-### Local Development
-
-Create `.env.local` file:
-```bash
-# Zoho Email
-ZOHO_EMAIL=contact@example.com
-ZOHO_APP_PASSWORD=your_zoho_app_password
-
-# Google reCAPTCHA v3
-NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_recaptcha_site_key
-RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
-```
-
-See [docs/contact-form-setup.md](docs/contact-form-setup.md) for detailed setup instructions.
+Optional environment variables can be added as needed for your specific deployment.
 
 ---
 
