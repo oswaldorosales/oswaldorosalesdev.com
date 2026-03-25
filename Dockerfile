@@ -42,10 +42,6 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copy application source
 COPY . .
 
-# Pass reCAPTCHA site key as build argument and environment variable
-ARG NEXT_PUBLIC_RECAPTCHA_SITE_KEY
-ENV NEXT_PUBLIC_RECAPTCHA_SITE_KEY=$NEXT_PUBLIC_RECAPTCHA_SITE_KEY
-
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
