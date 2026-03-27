@@ -41,6 +41,14 @@ export const metadata: Metadata = {
     title: "Oswaldo Rosales | Backend Software Engineer",
     description:
       "Backend Software Engineer with 9+ years of experience building scalable APIs and microservices with Java and Spring Boot. Focused on modernizing legacy systems and reliable distributed architecture.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1536,
+        height: 1024,
+        alt: "Oswaldo Rosales - Backend Software Engineer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
