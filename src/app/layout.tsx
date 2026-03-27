@@ -72,11 +72,42 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://oswaldorosalesdev.com",
   },
-  verification: {
-    // Add when you set up Google Search Console
-    // google: "your-google-verification-code",
-  },
   manifest: "/manifest.json",
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Oswaldo Rosales",
+  url: "https://oswaldorosalesdev.com",
+  image: "https://oswaldorosalesdev.com/images/profile.avif",
+  jobTitle: "Backend Software Engineer",
+  worksFor: {
+    "@type": "Organization",
+    name: "Avenue Code",
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Guadalajara",
+    addressRegion: "Jalisco",
+    addressCountry: "Mexico",
+  },
+  sameAs: [
+    "https://github.com/oswaldorosales",
+    "https://www.linkedin.com/in/oswaldo-rosales/",
+    "https://twitter.com/OswaldoRosalesA",
+  ],
+  knowsAbout: [
+    "Software Engineering",
+    "Java",
+    "Spring Boot",
+    "Microservices",
+    "Event-Driven Architecture",
+    "TypeScript",
+    "React",
+    "Next.js",
+    "Cloud Infrastructure",
+  ],
 };
 
 export default function RootLayout({
@@ -86,49 +117,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <head>
-        {/* Structured Data - JSON-LD */}
+      <body className="antialiased">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: "Oswaldo Rosales",
-              url: "https://oswaldorosalesdev.com",
-              image: "https://oswaldorosalesdev.com/images/profile.avif",
-              jobTitle: "Backend Software Engineer",
-              worksFor: {
-                "@type": "Organization",
-                name: "Avenue Code",
-              },
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: "Guadalajara",
-                addressRegion: "Jalisco",
-                addressCountry: "Mexico",
-              },
-              sameAs: [
-                "https://github.com/oswaldorosales",
-                "https://www.linkedin.com/in/oswaldo-rosales/",
-                "https://twitter.com/OswaldoRosalesA",
-              ],
-              knowsAbout: [
-                "Software Engineering",
-                "Java",
-                "Spring Boot",
-                "Microservices",
-                "Event-Driven Architecture",
-                "TypeScript",
-                "React",
-                "Next.js",
-                "Cloud Infrastructure",
-              ],
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
-      </head>
-      <body className="antialiased">
         <Navbar />
         {children}
       </body>

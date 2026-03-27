@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
@@ -10,9 +9,9 @@ export function Navbar() {
 
   const links = [
     { href: "/", label: "Home" },
+    { href: "/#experience", label: "Experience" },
     { href: "/#projects", label: "Projects" },
     { href: "/blog", label: "Blog" },
-    { href: "/#contact", label: "Contact" },
   ];
 
   return (
@@ -20,18 +19,16 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
-            <Image
+          <a href="/">
+            <img
               src="/logo.svg"
-              alt="Oswaldo Rosales"
-              width={180}
-              height={24}
-              priority
+              alt="Oswaldo Rosales - Home"
+              className="h-8 w-auto"
             />
-          </Link>
+          </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             {links.map((link) => (
               <Link
                 key={link.href}
@@ -41,6 +38,12 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <a
+              href="/#contact"
+              className="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
+            >
+              Contact
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -66,6 +69,13 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <a
+              href="/#contact"
+              onClick={() => setIsOpen(false)}
+              className="block px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition text-center"
+            >
+              Contact
+            </a>
           </div>
         )}
       </div>
