@@ -1,0 +1,85 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Calendar, ArrowRight } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description:
+    "Technical articles about software engineering, backend development, and building scalable systems.",
+  openGraph: {
+    title: "Blog | Oswaldo Rosales",
+    description:
+      "Technical articles about software engineering, backend development, and building scalable systems.",
+  },
+};
+
+const posts = [
+  {
+    slug: "the-importance-of-side-projects",
+    title: "The Importance of Side Projects",
+    date: "2024-03-27",
+    excerpt:
+      "Side projects help developers stay updated by allowing experimentation with newer and broader tech stacks than those used in day-to-day work.",
+  },
+];
+
+export default function BlogPage() {
+  return (
+    <main className="min-h-screen bg-slate-50">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* Header */}
+        <div className="mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+            Blog
+          </h1>
+          <p className="text-xl text-slate-600">
+            Technical articles about software engineering, backend development,
+            and building scalable systems.
+          </p>
+        </div>
+
+        {/* Blog Posts */}
+        <div className="space-y-8">
+          {posts.map((post) => (
+            <article
+              key={post.slug}
+              className="bg-white rounded-lg p-8 shadow-sm hover:shadow-md transition-shadow border border-slate-200"
+            >
+              <div className="flex items-center gap-2 text-slate-500 text-sm mb-3">
+                <Calendar className="h-4 w-4" />
+                <time dateTime={post.date}>
+                  {new Date(post.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </time>
+              </div>
+
+              <h2 className="text-2xl font-bold text-slate-900 mb-3">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  {post.title}
+                </Link>
+              </h2>
+
+              <p className="text-slate-600 mb-4 leading-relaxed">
+                {post.excerpt}
+              </p>
+
+              <Link
+                href={`/blog/${post.slug}`}
+                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors group"
+              >
+                Read more
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </article>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
