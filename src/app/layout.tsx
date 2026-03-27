@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s | Oswaldo Rosales",
   },
   description:
-    "Backend Software Engineer with 9+ years building scalable APIs and microservices. Experienced with Java, Spring Boot, and event-driven architecture. Focused on modernizing legacy systems and building reliable distributed systems.",
+    "Backend Software Engineer with 9+ years of experience building scalable APIs and microservices with Java and Spring Boot. Focused on modernizing legacy systems and reliable distributed architecture.",
   keywords: [
     "Backend Software Engineer",
     "Backend Developer",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     siteName: "Oswaldo Rosales - Backend Software Engineer",
     title: "Oswaldo Rosales | Backend Software Engineer",
     description:
-      "Backend Software Engineer with 9+ years building scalable APIs and microservices. Experienced with Java, Spring Boot, and event-driven architecture. Focused on modernizing legacy systems and building reliable distributed systems.",
+      "Backend Software Engineer with 9+ years of experience building scalable APIs and microservices with Java and Spring Boot. Focused on modernizing legacy systems and reliable distributed architecture.",
     images: [
       {
         url: "/og-image.png",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Oswaldo Rosales | Backend Software Engineer",
     description:
-      "Backend Software Engineer with 9+ years building scalable APIs and microservices. Experienced with Java, Spring Boot, and event-driven architecture. Focused on modernizing legacy systems and building reliable distributed systems.",
+      "Backend Software Engineer with 9+ years of experience building scalable APIs and microservices with Java and Spring Boot. Focused on modernizing legacy systems and reliable distributed architecture.",
     creator: "@OswaldoRosalesA",
     images: ["/og-image.png"],
   },
