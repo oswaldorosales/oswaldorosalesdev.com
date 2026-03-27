@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Navbar } from "@/components/layout/Navbar";
 import "./globals.css";
 
 const inter = Inter({
@@ -43,8 +44,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/og-image.png",
-        width: 1200,
-        height: 630,
+        width: 1536,
+        height: 1024,
         alt: "Oswaldo Rosales - Backend Software Engineer",
       },
     ],
@@ -128,6 +129,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <Navbar />
         {children}
       </body>
     </html>
