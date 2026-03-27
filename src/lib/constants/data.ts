@@ -14,9 +14,9 @@ import type {
 
 export const personalInfo: PersonalInfo = {
   name: "Oswaldo Rosales",
-  title: "Software Engineer",
-  headline: "Software Engineer building scalable, reliable systems and modernizing legacy platforms through microservices and event-driven architecture",
-  bio: "Software Engineer with 9+ years of experience building systems that solve real-world problems. I’ve worked on platforms across different industries, focusing on scalability, reliability, and clean architecture. Over time, I’ve grown from writing code to taking ownership of systems, helping teams improve how they build, and mentoring others along the way. I enjoy working on backend systems, designing solutions, and continuously learning new ways to build better software. Always learning, improving, and looking to build meaningful products.",
+  title: "Backend Software Engineer",
+  headline: "Backend Software Engineer specializing in Java and Spring Boot. I build scalable APIs and microservices, modernize legacy systems, and lead distributed teams to deliver reliable, high-performance solutions.",
+  bio: "With 9+ years of backend development experience, I specialize in Java and Spring Boot to build enterprise-grade microservices and REST APIs. I’ve worked on platforms across SEO, e-commerce, fintech, and healthcare. My focus is on writing clean, maintainable code and mentoring teams to improve engineering practices. I’m passionate about modernizing legacy systems and building scalable solutions that deliver real business value.",
   location: "Guadalajara, Jalisco, Mexico",
   email: "contact@oswaldorosalesdev.com",
   avatar: "/images/profile.webp",
