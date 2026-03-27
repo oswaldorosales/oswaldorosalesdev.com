@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Navbar } from "@/components/layout/Navbar";
 import "./globals.css";
 
 const inter = Inter({
@@ -40,14 +41,6 @@ export const metadata: Metadata = {
     title: "Oswaldo Rosales | Backend Software Engineer",
     description:
       "Backend Software Engineer with 9+ years of experience building scalable APIs and microservices with Java and Spring Boot. Focused on modernizing legacy systems and reliable distributed architecture.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Oswaldo Rosales - Backend Software Engineer",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -128,6 +121,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <Navbar />
         {children}
       </body>
     </html>
