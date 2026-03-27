@@ -24,9 +24,9 @@ export function Hero() {
               <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight">
                 {personalInfo.name}
               </h1>
-              <h2 className="text-2xl md:text-3xl text-slate-300 font-semibold">
+              <p className="text-2xl md:text-3xl text-slate-300 font-semibold">
                 {personalInfo.title}
-              </h2>
+              </p>
             </div>
 
             {/* Profile Image - Mobile Only */}
