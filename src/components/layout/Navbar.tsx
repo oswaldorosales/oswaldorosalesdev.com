@@ -18,16 +18,18 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <a href="/">
+          <Link
+            href="/"
+            className="flex items-center"
+            onClick={() => setIsOpen(false)}
+          >
             <img
               src="/logo.svg"
               alt="Oswaldo Rosales - Home"
-              className="h-8 w-auto"
+              className="h-8 w-auto transition-opacity hover:opacity-80"
             />
-          </a>
+          </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {links.map((link) => (
               <Link
@@ -38,27 +40,27 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <a
+            <Link
               href="/#contact"
               className="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
             >
               Contact
-            </a>
+            </Link>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden text-slate-300 hover:text-white transition-colors"
             aria-label="Toggle menu"
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 space-y-2">
+          <div id="mobile-menu" className="md:hidden py-4 space-y-2">
             {links.map((link) => (
               <Link
                 key={link.href}
@@ -69,13 +71,13 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <a
+            <Link
               href="/#contact"
               onClick={() => setIsOpen(false)}
               className="block px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition text-center"
             >
               Contact
-            </a>
+            </Link>
           </div>
         )}
       </div>
