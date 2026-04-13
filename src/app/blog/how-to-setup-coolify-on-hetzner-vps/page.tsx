@@ -147,7 +147,7 @@ export default function BlogPost() {
             installation issue. By default, Docker can automatically create
             networks with IPv6 enabled, which causes Coolify&apos;s proxy
             (Traefik) to fail with cryptic errors like{" "}
-            <code>ParseAddr("fdxx:xxxx::1/64")</code>. The proxy expects a pure
+            <code>ParseAddr(&quot;fdxx:xxxx::1/64&quot;)</code>. The proxy expects a pure
             IPv4 network configuration, and when it encounters IPv6 addresses,
             it cannot properly parse the network routes. This is a{" "}
             <a
