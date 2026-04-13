@@ -158,9 +158,10 @@ The homepage uses **hash-based navigation** for sections:
 - **Do NOT invent experience or skills** - only use what's in `data.ts`
 
 ### Writing Style
-- **Language:** English only
+- **Language:** English only (ALL content - even if I communicate in another language)
 - **Tone:** Professional, credible, natural
 - **Audience:** Developers, recruiters, potential clients
+- **Important:** The user may communicate with AI agents in Spanish or other languages, but ALL website content (blog posts, sections, metadata, etc.) MUST be written in English
 - **Avoid:**
   - Buzzwords and hype
   - Keyword stuffing
@@ -178,17 +179,24 @@ The homepage uses **hash-based navigation** for sections:
 
 ## SEO & Metadata
 
+### 🚨 SEO is Critical - Required for All New Pages
+
+**SEO metadata is NOT optional.** Every new page, route, or blog post MUST include complete SEO configuration before being committed. This is a production requirement, not a nice-to-have.
+
 ### Current SEO Strategy
 - **Focus:** Backend Software Engineer, Java, Spring Boot
 - **Keywords:** Backend Developer, Microservices, REST APIs, Event-Driven Architecture
 - **Target audience:** US-based companies, remote positions
 
-### Metadata Rules
+### Metadata Rules - MUST INCLUDE ALL
 1. **Title format:** "Page Title | Oswaldo Rosales"
 2. **Description length:** 150-160 characters
-3. **Include OpenGraph** for social sharing
-4. **Include Twitter Card** metadata
-5. **Use JSON-LD** for structured data (already configured)
+3. **Keywords:** Relevant array of search terms
+4. **OpenGraph:** Complete configuration with type, url, title, description, images
+5. **Twitter Card:** Complete metadata with card type, title, description, creator, images
+6. **Canonical URL:** Using `alternates.canonical`
+7. **Authors:** Specify author metadata
+8. **JSON-LD:** Structured data for blog posts (BlogPosting schema)
 
 ### Assets
 - **Open Graph image:** `public/og-image.png` (1536x1024)
@@ -272,27 +280,108 @@ pnpm build | grep "Route (app)"
    src/app/blog/post-slug/page.tsx
    ```
 
-2. **Add metadata:**
+2. **Add COMPLETE metadata (REQUIRED - ALL fields):**
    ```tsx
    export const metadata: Metadata = {
      title: "Post Title",
      description: "Post description (150-160 chars)",
-     openGraph: { ... },
+     keywords: ["Keyword1", "Keyword2", "Keyword3"],
+     authors: [{ name: "Oswaldo Rosales", url: "https://oswaldorosalesdev.com" }],
+     openGraph: {
+       type: "article",
+       url: "https://oswaldorosalesdev.com/blog/post-slug",
+       title: "Post Title",
+       description: "Post description",
+       publishedTime: "YYYY-MM-DDTHH:mm:ss.000Z",
+       authors: ["Oswaldo Rosales"],
+       images: [{
+         url: "/og-image.png",
+         width: 1536,
+         height: 1024,
+         alt: "Post Title - Oswaldo Rosales",
+       }],
+     },
+     twitter: {
+       card: "summary_large_image",
+       title: "Post Title",
+       description: "Post description",
+       creator: "@OswaldoRosalesA",
+       images: ["/og-image.png"],
+     },
+     alternates: {
+       canonical: "https://oswaldorosalesdev.com/blog/post-slug",
+     },
    };
    ```
 
-3. **Update blog index:**
+3. **Add JSON-LD structured data (REQUIRED):**
+   ```tsx
+   const blogPostJsonLd = {
+     "@context": "https://schema.org",
+     "@type": "BlogPosting",
+     headline: "Post Title",
+     description: "Post description",
+     image: "https://oswaldorosalesdev.com/og-image.png",
+     datePublished: "YYYY-MM-DDTHH:mm:ss.000Z",
+     dateModified: "YYYY-MM-DDTHH:mm:ss.000Z",
+     author: {
+       "@type": "Person",
+       name: "Oswaldo Rosales",
+       url: "https://oswaldorosalesdev.com",
+       jobTitle: "Backend Software Engineer",
+     },
+     publisher: {
+       "@type": "Person",
+       name: "Oswaldo Rosales",
+       url: "https://oswaldorosalesdev.com",
+     },
+     mainEntityOfPage: {
+       "@type": "WebPage",
+       "@id": "https://oswaldorosalesdev.com/blog/post-slug",
+     },
+     keywords: ["Keyword1", "Keyword2"],
+   };
+
+   export default function BlogPost() {
+     return (
+       <main>
+         <script
+           type="application/ld+json"
+           dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostJsonLd) }}
+         />
+         {/* article content */}
+       </main>
+     );
+   }
+   ```
+
+4. **Update blog index:**
    ```tsx
    // Add to posts array in src/app/blog/page.tsx
    {
      slug: "post-slug",
      title: "Post Title",
-     date: "YYYY-MM-DD",
+     date: "YYYY-MM-DD", // Use git commit date
      excerpt: "Brief description",
    }
    ```
 
-4. **Use straightforward JSX** - no complex abstractions
+5. **Use straightforward JSX** - no complex abstractions
+
+**SEO Checklist (verify all before committing):**
+- [ ] metadata.title
+- [ ] metadata.description (150-160 chars)
+- [ ] metadata.keywords
+- [ ] metadata.authors
+- [ ] openGraph.type = "article"
+- [ ] openGraph.url (canonical URL)
+- [ ] openGraph.publishedTime
+- [ ] openGraph.images
+- [ ] twitter.card
+- [ ] twitter.creator
+- [ ] alternates.canonical
+- [ ] JSON-LD BlogPosting schema
+- [ ] Date in blog index matches git commit date
 
 ### Adding a New Component
 
@@ -442,6 +531,7 @@ A change is successful when:
 6. ✅ Matches existing design language
 7. ✅ No deployment configuration changes (unless approved)
 8. ✅ Commit messages are clear and descriptive
+9. ✅ **SEO metadata is complete** (for new pages/posts - see SEO checklist above)
 
 ---
 

@@ -6,16 +6,88 @@ export const metadata: Metadata = {
   title: "The Importance of Side Projects",
   description:
     "Side projects allow developers to experiment with newer tech stacks and stay updated beyond their day-to-day work.",
+  keywords: [
+    "Side Projects",
+    "Software Development",
+    "Developer Growth",
+    "Learning",
+    "Career Development",
+    "Tech Stack",
+    "Programming",
+  ],
+  authors: [{ name: "Oswaldo Rosales", url: "https://oswaldorosalesdev.com" }],
   openGraph: {
+    type: "article",
+    url: "https://oswaldorosalesdev.com/blog/the-importance-of-side-projects",
     title: "The Importance of Side Projects",
     description:
       "Why side projects are essential for developer growth and staying relevant in a fast-moving industry.",
+    publishedTime: "2026-03-27T00:00:00.000Z",
+    authors: ["Oswaldo Rosales"],
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1536,
+        height: 1024,
+        alt: "The Importance of Side Projects - Oswaldo Rosales",
+      },
+    ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Importance of Side Projects",
+    description:
+      "Why side projects are essential for developer growth and staying relevant in a fast-moving industry.",
+    creator: "@OswaldoRosalesA",
+    images: ["/og-image.png"],
+  },
+  alternates: {
+    canonical:
+      "https://oswaldorosalesdev.com/blog/the-importance-of-side-projects",
+  },
+};
+
+const blogPostJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: "The Importance of Side Projects",
+  description:
+    "Side projects allow developers to experiment with newer tech stacks and stay updated beyond their day-to-day work.",
+  image: "https://oswaldorosalesdev.com/og-image.png",
+  datePublished: "2026-03-27T00:00:00.000Z",
+  dateModified: "2026-03-27T00:00:00.000Z",
+  author: {
+    "@type": "Person",
+    name: "Oswaldo Rosales",
+    url: "https://oswaldorosalesdev.com",
+    jobTitle: "Backend Software Engineer",
+  },
+  publisher: {
+    "@type": "Person",
+    name: "Oswaldo Rosales",
+    url: "https://oswaldorosalesdev.com",
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id":
+      "https://oswaldorosalesdev.com/blog/the-importance-of-side-projects",
+  },
+  keywords: [
+    "Side Projects",
+    "Software Development",
+    "Developer Growth",
+    "Learning",
+    "Career Development",
+  ],
 };
 
 export default function BlogPost() {
   return (
     <main className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostJsonLd) }}
+      />
       <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* Back Link */}
         <Link
@@ -30,7 +102,7 @@ export default function BlogPost() {
         <header className="mb-12">
           <div className="flex items-center gap-2 text-slate-500 text-sm mb-4">
             <Calendar className="h-4 w-4" />
-            <time dateTime="2024-03-27">March 27, 2024</time>
+            <time dateTime="2026-03-27">March 27, 2026</time>
           </div>
 
           <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">

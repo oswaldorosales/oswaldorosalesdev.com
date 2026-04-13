@@ -6,18 +6,62 @@ export const metadata: Metadata = {
   title: "Blog",
   description:
     "Technical articles about software engineering, backend development, and building scalable systems.",
+  keywords: [
+    "Software Engineering Blog",
+    "Backend Development",
+    "Java",
+    "Spring Boot",
+    "Microservices",
+    "System Design",
+    "Technical Writing",
+  ],
   openGraph: {
+    type: "website",
+    url: "https://oswaldorosalesdev.com/blog",
     title: "Blog | Oswaldo Rosales",
     description:
       "Technical articles about software engineering, backend development, and building scalable systems.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1536,
+        height: 1024,
+        alt: "Oswaldo Rosales - Blog",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog | Oswaldo Rosales",
+    description:
+      "Technical articles about software engineering, backend development, and building scalable systems.",
+    creator: "@OswaldoRosalesA",
+    images: ["/og-image.png"],
+  },
+  alternates: {
+    canonical: "https://oswaldorosalesdev.com/blog",
   },
 };
 
 const posts = [
   {
+    slug: "how-to-setup-coolify-on-hetzner-vps",
+    title: "How to Setup Coolify on a Hetzner VPS",
+    date: "2026-04-13",
+    excerpt:
+      "A complete guide to installing and configuring Coolify on a Hetzner VPS, from server setup to production-ready deployments with GitHub Actions.",
+  },
+  {
+    slug: "why-i-chose-vps-coolify-instead-of-vercel",
+    title: "Why I Chose VPS + Coolify Instead of Vercel",
+    date: "2026-04-13",
+    excerpt:
+      "A comparison of deployment platforms and why I chose self-hosted VPS with Coolify for better control, learning, and cost predictability.",
+  },
+  {
     slug: "the-importance-of-side-projects",
     title: "The Importance of Side Projects",
-    date: "2024-03-27",
+    date: "2026-03-27",
     excerpt:
       "Side projects help developers stay updated by allowing experimentation with newer and broader tech stacks than those used in day-to-day work.",
   },
