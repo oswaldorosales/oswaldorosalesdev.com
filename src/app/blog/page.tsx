@@ -45,6 +45,13 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    slug: "jwt-stateless-vs-userdetailsservice",
+    title: "JWT Stateless Auth vs UserDetailsService in Spring Security",
+    date: "2026-04-18",
+    excerpt:
+      "Most Spring Security JWT tutorials hit the database on every request. Here's when that's unnecessary overhead—and how a stateless AuthPrincipal fixes it.",
+  },
+  {
     slug: "how-to-setup-coolify-on-hetzner-vps",
     title: "How to Setup Coolify on a Hetzner VPS",
     date: "2026-04-13",
