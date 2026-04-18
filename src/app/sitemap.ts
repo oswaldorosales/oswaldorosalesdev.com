@@ -5,7 +5,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Define specific dates for accuracy
   const homepageLastModified = new Date('2026-03-31'); // Last major update
-  const blogLastModified = new Date('2026-03-27'); // When blog section was added
+  const blogLastModified = new Date('2026-04-18'); // Last post published
   const resumeLastModified = new Date('2026-03-31'); // Resume last update
 
   return [
@@ -20,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: blogLastModified,
       changeFrequency: 'weekly',
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/jwt-stateless-vs-userdetailsservice`,
+      lastModified: new Date('2026-04-18'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/blog/how-to-setup-coolify-on-hetzner-vps`,
