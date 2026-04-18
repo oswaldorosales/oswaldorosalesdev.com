@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s | Oswaldo Rosales",
   },
   description:
-    "Backend Software Engineer with 9+ years of experience building scalable APIs and microservices with Java and Spring Boot. Focused on modernizing legacy systems and reliable distributed architecture.",
+    "Backend Software Engineer with 9+ years of experience building scalable APIs and microservices with Java and Spring Boot. Available for US contracts through Speed of Bytes, Inc — US-registered entity, able to invoice US companies directly in USD.",
   keywords: [
     "Backend Software Engineer",
     "Backend Developer",
@@ -29,6 +29,27 @@ export const metadata: Metadata = {
     "Mexico",
     "TypeScript",
     "React",
+    "US Contractor",
+    "Backend Contractor",
+    "Java Contractor",
+    "Speed of Bytes Inc",
+    "US Invoice",
+    "US Entity",
+    "Available for US Contracts",
+    "Independent Contractor US",
+    "W-9 Ready",
+    "Backend Engineer US Contract",
+    "Freelance Backend Engineer US",
+    "Freelance Java Developer US",
+    "Freelance Software Engineer US",
+    "Freelancer Mexico",
+    "Profesional Independiente Mexico",
+    "Ingeniero Backend Mexico",
+    "Desarrollador Java Mexico",
+    "Factura CFDI",
+    "Factura electronica desarrollador",
+    "Servicios de software Mexico",
+    "Consultor backend Mexico",
   ],
   authors: [{ name: "Oswaldo Rosales", url: "https://oswaldorosalesdev.com" }],
   creator: "Oswaldo Rosales",
@@ -40,7 +61,7 @@ export const metadata: Metadata = {
     siteName: "Oswaldo Rosales - Backend Software Engineer",
     title: "Oswaldo Rosales | Backend Software Engineer",
     description:
-      "Backend Software Engineer with 9+ years of experience building scalable APIs and microservices with Java and Spring Boot. Focused on modernizing legacy systems and reliable distributed architecture.",
+      "Backend Software Engineer with 9+ years of experience building scalable APIs and microservices with Java and Spring Boot. Available for US contracts through Speed of Bytes, Inc — US-registered entity, able to invoice US companies directly in USD.",
     images: [
       {
         url: "/og-image.png",
@@ -54,7 +75,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Oswaldo Rosales | Backend Software Engineer",
     description:
-      "Backend Software Engineer with 9+ years of experience building scalable APIs and microservices with Java and Spring Boot. Focused on modernizing legacy systems and reliable distributed architecture.",
+      "Backend Software Engineer with 9+ years of experience building scalable APIs and microservices with Java and Spring Boot. Available for US contracts through Speed of Bytes, Inc — US-registered entity, able to invoice US companies directly in USD.",
     creator: "@OswaldoRosalesA",
     images: ["/og-image.png"],
   },
@@ -85,6 +106,13 @@ const personJsonLd = {
   worksFor: {
     "@type": "Organization",
     name: "Avenue Code",
+  },
+  affiliation: {
+    "@type": "Organization",
+    name: "Speed of Bytes, Inc",
+    url: "https://speedofbytes.io",
+    description:
+      "US-registered software engineering company providing backend development services to US clients.",
   },
   address: {
     "@type": "PostalAddress",
